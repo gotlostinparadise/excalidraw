@@ -9,6 +9,8 @@ interface ImportMetaEnv {
   VITE_APP_BACKEND_V2_GET_URL: string;
   VITE_APP_BACKEND_V2_POST_URL: string;
 
+  VITE_APP_FILES_BACKEND_URL: string;
+
   VITE_APP_LIBRARY_URL: string;
   VITE_APP_LIBRARY_BACKEND: string;
 

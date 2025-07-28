@@ -37,7 +37,7 @@ import {
 } from "../app_constants";
 
 import { encodeFilesForUpload } from "./FileManager";
-import { saveFilesToFirebase } from "./firebase";
+import { saveFilesToServer } from "./customBackend";
 
 import type { WS_SUBTYPES } from "../app_constants";
 
@@ -320,7 +320,7 @@ export const exportToBackend = async (
       url.hash = `json=${json.id},${encryptionKey}`;
       const urlString = url.toString();
 
-      await saveFilesToFirebase({
+      await saveFilesToServer({
         prefix: `/files/shareLinks/${json.id}`,
         files: filesToUpload,
       });
