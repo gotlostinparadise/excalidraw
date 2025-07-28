@@ -1,6 +1,7 @@
 import { MIME_TYPES } from "@excalidraw/common";
 import { decompressData } from "@excalidraw/excalidraw/data/encode";
-import type { BinaryFileData, BinaryFileMetadata, DataURL, FileId } from "@excalidraw/excalidraw/types";
+import type { BinaryFileData, BinaryFileMetadata, DataURL } from "@excalidraw/excalidraw/types";
+import type { FileId } from "@excalidraw/element/types";
 
 const FILES_BACKEND = import.meta.env.VITE_APP_FILES_BACKEND_URL;
 
