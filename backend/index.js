@@ -11,7 +11,10 @@ const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
 
 app.use(morgan("dev"));
 app.use(cors());
-app.use(express.raw({ type: "*/*", limit: "50mb" }));
+// Accept bodies even if the request lacks a Content-Type header, which
+// happens when the frontend sends raw ArrayBuffer payloads. Using a function
+// for the `type` option ensures the raw parser always runs.
+app.use(express.raw({ type: () => true, limit: "50mb" }));
 
 const ensureDir = (dir) => fs.mkdirSync(dir, { recursive: true });
 
