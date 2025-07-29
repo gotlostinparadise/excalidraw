@@ -4,6 +4,7 @@ const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 const morgan = require("morgan");
 const cors = require("cors");
+const { execSync } = require("child_process");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -17,6 +18,24 @@ app.use(cors());
 app.use(express.raw({ type: () => true, limit: "50mb" }));
 
 const ensureDir = (dir) => fs.mkdirSync(dir, { recursive: true });
+
+if (process.env.MOUNT_SHARE) {
+  ensureDir(DATA_DIR);
+  const options = [];
+  if (process.env.MOUNT_SHARE_USERNAME) {
+    options.push(`username=${process.env.MOUNT_SHARE_USERNAME}`);
+  }
+  if (process.env.MOUNT_SHARE_PASSWORD) {
+    options.push(`password=${process.env.MOUNT_SHARE_PASSWORD}`);
+  }
+  const opts = options.length ? `-o ${options.join(',')}` : '';
+  try {
+    execSync(`mount -t cifs ${process.env.MOUNT_SHARE} ${DATA_DIR} ${opts}`);
+    console.log(`Mounted share ${process.env.MOUNT_SHARE} to ${DATA_DIR}`);
+  } catch (err) {
+    console.error('Failed to mount share:', err.message || err);
+  }
+}
 
 app.post('/api/v2/post/', (req, res) => {
   const id = uuidv4();
