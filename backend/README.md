@@ -11,6 +11,10 @@ inside the container.
 - `POST /api/files/upload?prefix=<path>&id=<fileId>` – stores a binary file.
 - `GET /api/files?prefix=<path>&id=<fileId>` – retrieves a stored file.
 
+The server also exposes a Socket.IO websocket endpoint used for real-time
+collaboration. Clients should connect to `ws://<host>:5000` (configurable via
+`VITE_APP_WS_SERVER_URL`).
+
 ## Running
 
 The repository provides a `docker-compose.yml` setup which starts this backend
